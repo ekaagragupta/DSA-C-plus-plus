@@ -1,44 +1,35 @@
 class Solution {
 public:
-
-    // Function to check if s[left...right] is a palindrome
-    bool check(string &s, int left, int right) {
-
-        while (left < right) {
-
-            if (s[left] != s[right]) {
+    bool isPalindrome(const string &s, int i, int j){
+        while(i<j){
+            if(s[i]==s[j]){
+                i++;
+                j--;
+            }else{
                 return false;
             }
-
-            left++;
-            right--;
         }
-
         return true;
     }
-
-    bool validPalindrome(string s) {
-
-        int left = 0;
-        int right = s.length() - 1;
-
-        while (left < right) {
-
-            // Characters match
-            if (s[left] == s[right]) {
-                left++;
-                right--;
-            }
-
-            // First mismatch found
-            else {
-
-                // Delete left character OR delete right character
-                return check(s, left + 1, right) ||
-                       check(s, left, right - 1);
+    bool validPalindrome(const string &s) {
+        int count = 0;
+        int i=0;
+        int j = s.length()-1;
+        while(i<j){
+            if(s[i]==s[j]){
+                i++;
+                j--;
+            }else if(isPalindrome(s, i, j-1)){
+                count++;
+                j--;
+            }else if(isPalindrome(s, i+1, j)){
+                count++;
+                i++;
+            }else{
+                return false;
             }
         }
-
         return true;
-    }
+        }
+
 };
