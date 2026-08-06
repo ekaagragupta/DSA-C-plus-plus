@@ -2,7 +2,7 @@ class Solution {
 public:
     bool predictTheWinner(vector<int>& A) {
         int n = A.size();
-        if (~n & 1) return true;
+       
 
         vector<int> dp(n);
 
