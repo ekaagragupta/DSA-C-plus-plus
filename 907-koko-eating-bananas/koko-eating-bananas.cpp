@@ -4,8 +4,10 @@ public:
         long long hours = 0;
         for (int pile : piles) {
             hours += pile / k;
-            if (pile % k != 0) hours++;
-            if (hours > h) return false;
+            if (pile % k != 0)
+                hours++;
+            if (hours > h)
+                return false;
         }
         return hours <= h;
     }
