@@ -1,30 +1,46 @@
 class Solution {
-    int dfs(int i, int m, vector<int>& piles, unordered_map<int, int>& memo) {
-        int n = piles.size();
-        if (i + m * 2 >= n)
-            return piles[i];
+public:
+    int solve(int l, int r, vector<int> &piles, int m, vector<int> &pre, vector<vector<int>> &dp){
+        if(l > r) return 0;
 
-        int key = (i << 8) | m;
-        if (memo.count(key))
-            return memo[key];
+        if(dp[l][m] != -1) return dp[l][m];
 
-        int res = 2000000000;
-        for (int k = 1; k <= m * 2; k++)
-            res = min(res, dfs(i + k, max(m, k), piles, memo));
+        int ans = 0, temp = 0;
 
-        memo[key] = piles[i] - res;
+        for(int i=1;(l + i) <= r + 1 && i <= 2*m;++i){
+            temp = 0;
 
-        return memo[key];
+            temp += pre[l + i] - pre[l];
+            temp += ((pre[r+1] - pre[l+i]) - solve(l + i, r, piles, max(m, i), pre, dp));
+
+            ans = max(ans, temp);
+        }
+
+        return dp[l][m] = ans;
     }
 
-public:
     int stoneGameII(vector<int>& piles) {
         int n = piles.size();
-        for (int i = n - 2; i >= 0; i--)
-            piles[i] += piles[i + 1];
 
-        unordered_map<int, int> memo;
+        vector<int> pre(n + 1, 0);
+        vector<vector<int>> dp(n+1, vector<int> (n+1, -1));
 
-        return dfs(0, 1, piles, memo);
+        for(int i=1;i<n+1;++i){
+            pre[i] = pre[i-1] + piles[i-1];
+        }
+
+        return solve(0, n-1, piles, 1, pre, dp);
     }
 };
+
+
+// pre[1] - pre[0]
+// pre[4] - pre[1]
+
+
+// M = 1;
+// 1 <= X <= 2M
+
+// M = max(M, X)
+
+// [2,7,9,4,4]
