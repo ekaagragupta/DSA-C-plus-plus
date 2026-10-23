@@ -53,9 +53,8 @@ public:
     }
 
     int maxAreaOfIsland(vector<vector<int>>& grid) {
-        return hemank(grid);
 
-        // return ekaagra(grid);
+        return ekaagra(grid);
     }
 
     // jay mata di
