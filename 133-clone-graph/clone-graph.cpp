@@ -34,7 +34,7 @@ public:
         while (q.empty() == false) {
             Node* curr = q.front();
             q.pop();
-            for (auto adj: curr->neighbors) {
+            for (auto adj : curr->neighbors) {
                 if (mp.find(adj) == mp.end()) {
                     mp[adj] = new Node(adj->val, {}); // then create copy
                     q.push(adj);                      // push nto the queue
